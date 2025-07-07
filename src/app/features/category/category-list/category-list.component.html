@@ -23,7 +23,7 @@
                     <td>{{ category.name }}</td>
                     <td>{{ category.urlHandle }}</td>
                     <td>
-                        <a class="btn btn-warning btn-sm mr-2">Edit</a>
+                        <a class="btn btn-warning btn-sm mr-2" [routerLink]="['/admin/categories',category.id]">Edit</a>
                         <button class="btn btn-danger btn-sm">Delete</button>
                     </td>
                 </tr>
