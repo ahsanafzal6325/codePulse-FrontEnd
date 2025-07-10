@@ -1,4 +1,4 @@
 export interface UpdateCategoryRequest {
-    namee: string;
+    name: string;
     urlHandle: string;
 }

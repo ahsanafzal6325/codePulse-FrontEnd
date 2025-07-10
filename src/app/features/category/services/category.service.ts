@@ -35,6 +35,10 @@ export class CategoryService {
     console.log(id);
     return this.http.put<Category>(`${environment.BASE_URL}/Categories/${id}`, updateCategoryRequest);
   }
+  deleteCategory(id: string): Observable<string> {
+    return this.http.delete(`${environment.BASE_URL}/Categories/${id}`, { responseType: 'text' });
+  }
+  
  
 
 

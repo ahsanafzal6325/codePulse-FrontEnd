@@ -39,7 +39,7 @@ constructor(private route: ActivatedRoute,
 
   onSubmit(): void{
     const updateCategoryRequest : UpdateCategoryRequest={
-      namee: this.category?.name || '',
+      name: this.category?.name || '',
       urlHandle: this.category?.urlHandle || ''
     };
 
@@ -53,6 +53,17 @@ constructor(private route: ActivatedRoute,
       });
     }
   }
+
+  OnDelete(): void{
+    if(this.id) {
+      this.categoryService.deleteCategory(this.id).subscribe({
+        next: (response) =>{
+          this.router.navigateByUrl('/admin/categories');
+        }
+      });
+    }
+  }
+
 
 
   ngOnDestroy(): void {
