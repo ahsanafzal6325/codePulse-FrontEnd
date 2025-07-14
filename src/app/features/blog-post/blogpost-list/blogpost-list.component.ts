@@ -13,9 +13,10 @@ export class BlogpostListComponent implements OnInit {
   constructor(private blogPostsService: BlogPostService) { }
 
   ngOnInit(): void {
-    this.blogPosts$ = this.blogPostsService.getAllBlogPosts();
-
-  }
+  this.blogPostsService.getAllBlogPosts().subscribe(posts => {
+    this.blogPosts$ = this.blogPostsService.getAllBlogPosts(); // keep this if you want to use async pipe in template
+  });
+}
 
 
 }

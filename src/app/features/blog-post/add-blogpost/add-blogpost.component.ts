@@ -23,7 +23,7 @@ export class AddBlogpostComponent implements OnInit {
       title:'',
       shortDescription: '',
       content: '',
-      featuredimageUrl: '',
+      featuredImageUrl: '',
       urlHandle: '',
       author: '',
       isVisible: true,
