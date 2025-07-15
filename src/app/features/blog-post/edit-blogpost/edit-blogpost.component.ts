@@ -21,6 +21,7 @@ export class EditBlogpostComponent implements OnInit, OnDestroy {
   getBlogPostPostSubscription?: Subscription
   categories$?: Observable<Category[]>;
   selectedCategories?: string[];
+  isImageSelectorVisible: boolean = false;
 
 
 
@@ -85,7 +86,12 @@ export class EditBlogpostComponent implements OnInit, OnDestroy {
 
   }
   
-
+  openImageSelector(): void {
+    this.isImageSelectorVisible = true;
+  }
+  closImageSelector(): void {
+    this.isImageSelectorVisible = false;
+  }
   onDelete(): void {
     if (this.id) {
       this.blogPostService.deleteBlogPost(this.id).subscribe({
