@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ImageService } from './image.service';
+import { Observable } from 'rxjs';
+import { BlogImage } from '../../models/blog-image.model';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-image-selector',
   templateUrl: './image-selector.component.html',
   styleUrls: ['./image-selector.component.css']
 })
-export class ImageSelectorComponent {
+export class ImageSelectorComponent implements OnInit {
 
 
 
@@ -15,10 +18,25 @@ export class ImageSelectorComponent {
   private file?: File;
   fileName: string = '';
   title: string = '';
+  images$?: Observable<BlogImage[]>;
+
+  @ViewChild('form',{static: false}) imageUploadForm?: NgForm;
+
+
+
   constructor(private imageService: ImageService) {
   }
 
 
+
+
+  ngOnInit(): void {
+    this.getImages();
+  }
+
+  selectImage(file: BlogImage): void{
+    this.imageService.selectImage(file);
+  }
 
   uploadImage(): void {
     if (this.file && this.file.name !== '' && this.title !== '') {
@@ -26,6 +44,8 @@ export class ImageSelectorComponent {
       .subscribe({
         next: (response) =>{
           console.log('Image uploaded successfully:', response);
+          this.imageUploadForm?.resetForm();
+          this.getImages();
         }
       });
     } else {
@@ -40,5 +60,11 @@ export class ImageSelectorComponent {
     this.file = element.files?.[0];
 
   }
+
+
+   private getImages(){
+    this.images$ = this.imageService.getAllImages();
+
+   }
 
 }

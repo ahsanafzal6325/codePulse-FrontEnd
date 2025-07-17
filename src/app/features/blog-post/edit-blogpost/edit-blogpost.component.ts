@@ -6,6 +6,7 @@ import { BlogPost } from '../models/blog-post-model';
 import { CategoryService } from '../../category/services/category.service';
 import { Category } from '../../category/modals/category.model';
 import { UpdateBlogPost } from '../models/update-blog-post.model';
+import { ImageService } from 'src/app/shared/components/image-selector/image.service';
 
 @Component({
   selector: 'app-edit-blogpost',
@@ -17,8 +18,9 @@ export class EditBlogpostComponent implements OnInit, OnDestroy {
   id: string | null = null;
   model?: BlogPost
   routeSubscription?: Subscription;
-  updateBlogPostSubscription?: Subscription
-  getBlogPostPostSubscription?: Subscription
+  updateBlogPostSubscription?: Subscription;
+  getBlogPostPostSubscription?: Subscription;
+  imageSelectSubscription?: Subscription;
   categories$?: Observable<Category[]>;
   selectedCategories?: string[];
   isImageSelectorVisible: boolean = false;
@@ -29,6 +31,7 @@ export class EditBlogpostComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
   private blogPostService: BlogPostService,
   private categoryService: CategoryService,
+  private imageService: ImageService,
   private router: Router) {
 
    }
@@ -45,6 +48,7 @@ export class EditBlogpostComponent implements OnInit, OnDestroy {
         
         // Get BogPost from API or service using this.id
         if (this.id) {
+
           this.getBlogPostPostSubscription = this.blogPostService.getBlogPostById(this.id).subscribe({
             next: (response) =>{
               this.model = response;
@@ -53,6 +57,20 @@ export class EditBlogpostComponent implements OnInit, OnDestroy {
             }
           });
         }
+
+
+        this.imageSelectSubscription = this.imageService.onSelectImage().subscribe({
+          next: (image) => {
+            if (image) {
+              if(this.model){
+                this.model.featuredImageUrl = image.url;
+                this.model.title = image.title;
+                this.isImageSelectorVisible = false;
+              }
+            }
+          }
+        })
+
       }
     });
   }
@@ -112,5 +130,6 @@ export class EditBlogpostComponent implements OnInit, OnDestroy {
     this.routeSubscription?.unsubscribe();
     this.updateBlogPostSubscription?.unsubscribe();
     this.getBlogPostPostSubscription?.unsubscribe();
+    this.imageSelectSubscription?.unsubscribe();
   }
 }
