@@ -35,6 +35,11 @@ export class LoginComponent {
           undefined, '/',undefined,true,'Strict'
         );
 
+        this.authService.setUser({
+          email: response.email,
+          roles: response.roles
+        });
+
         this.router.navigateByUrl('/');
       }
     });
