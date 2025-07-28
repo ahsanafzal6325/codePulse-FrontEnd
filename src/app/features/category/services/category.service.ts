@@ -14,9 +14,7 @@ export class CategoryService {
   constructor(private http: HttpClient) { }
 
 
-  addCategory(model: AddCategoryRequest): Observable<void>{
-    return this.http.post<void>(`${environment.BASE_URL}/Categories`,model);
-  }
+  
 
 
 
@@ -30,13 +28,23 @@ export class CategoryService {
   }
 
 
+
+
+
+  addCategory(model: AddCategoryRequest): Observable<void>{
+    return this.http.post<void>(`${environment.BASE_URL}/Categories?addAuth=true`,model);
+  }
+
+  
+
+
   updatecategory(id: string, updateCategoryRequest: UpdateCategoryRequest): Observable<Category>{
     console.log(updateCategoryRequest);
     console.log(id);
-    return this.http.put<Category>(`${environment.BASE_URL}/Categories/${id}`, updateCategoryRequest);
+    return this.http.put<Category>(`${environment.BASE_URL}/Categories/${id}?addAuth=true`, updateCategoryRequest);
   }
   deleteCategory(id: string): Observable<string> {
-    return this.http.delete(`${environment.BASE_URL}/Categories/${id}`, { responseType: 'text' });
+    return this.http.delete(`${environment.BASE_URL}/Categories/${id}?addAuth=true`, { responseType: 'text' });
   }
   
  
