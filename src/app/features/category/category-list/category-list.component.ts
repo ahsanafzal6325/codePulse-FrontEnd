@@ -19,4 +19,11 @@ export class CategoryListComponent implements OnInit {
     this.categories$ = this.categoryService.getAllcategories();
     
   }
+
+  sort(sortBy: string, sortDirection: string){
+    this.categories$ = this.categoryService.getAllcategories(undefined , sortBy , sortDirection)
+  }
+  onSearch(query?: string){
+    this.categories$ = this.categoryService.getAllcategories(query);
+  }
 }

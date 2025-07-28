@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AddCategoryRequest } from '../modals/add-category-request.modal';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Category } from '../modals/category.model';
 import { environment } from 'src/environments/environment.development';
 import { UpdateCategoryRequest } from '../modals/update-category-request.model';
@@ -19,8 +19,21 @@ export class CategoryService {
 
 
 
-  getAllcategories(): Observable<Category[]>{
-    return this.http.get<Category[]>(`${environment.BASE_URL}/Categories`);
+  getAllcategories(query?: string, sortBy? : string , sortDirection? : string): Observable<Category[]>{
+    let payload = new HttpParams();
+
+    if(query){
+      payload = payload.set('query',query);
+    }
+    if(sortBy){
+      payload = payload.set('sortBy',sortBy);
+    }
+    if(sortDirection){
+      payload = payload.set('sortDirection',sortDirection);
+    }
+    return this.http.get<Category[]>(`${environment.BASE_URL}/Categories`, {
+      params: payload
+    });
   }
 
   getCategoryById(id: string): Observable<Category>{
