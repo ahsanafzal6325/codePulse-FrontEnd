@@ -19,7 +19,9 @@ export class CategoryService {
 
 
 
-  getAllcategories(query?: string, sortBy? : string , sortDirection? : string): Observable<Category[]>{
+  getAllcategories(query?: string, sortBy? : string , sortDirection? : string,
+    pageNumber?: number , pageSize?: number
+  ): Observable<Category[]>{
     let payload = new HttpParams();
 
     if(query){
@@ -31,6 +33,13 @@ export class CategoryService {
     if(sortDirection){
       payload = payload.set('sortDirection',sortDirection);
     }
+
+    if(pageNumber){
+      payload = payload.set('pageNumber',pageNumber);
+    }
+    if(pageSize){
+      payload = payload.set('pageSize',pageSize);
+    }
     return this.http.get<Category[]>(`${environment.BASE_URL}/Categories`, {
       params: payload
     });
@@ -38,6 +47,11 @@ export class CategoryService {
 
   getCategoryById(id: string): Observable<Category>{
     return this.http.get<Category>(`${environment.BASE_URL}/Categories/${id}`);
+  }
+
+
+  getCategoryCount(): Observable<number>{
+    return this.http.get<number>(`${environment.BASE_URL}/Categories/count`);
   }
 
 
