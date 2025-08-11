@@ -3,6 +3,7 @@ import { LoginRequest } from '../models/login-request.model';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
@@ -34,8 +35,11 @@ export class LoginComponent {
         this.cookieService.set('Authorization',`Bearer ${response.token}`,
           undefined, '/',undefined,true,'Strict'
         );
-
+        localStorage.setItem('token', response.token);
+        const decodedToken: any = jwtDecode(response.token);
+        const userId = decodedToken.sub || decodedToken.nameid;
         this.authService.setUser({
+          id: userId,
           email: response.email,
           roles: response.roles
         });

@@ -18,6 +18,8 @@ import { HomeComponent } from './features/public/home/home.component';
 import { BlogDetailsComponent } from './features/public/blog-details/blog-details.component';
 import { LoginComponent } from './features/auth/login/login.component';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { ChatComponent } from './features/Chat/chat/chat.component';
+import { AllUsersComponent } from './features/users/all-users/all-users.component';
 
 
 
@@ -34,7 +36,9 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
     ImageSelectorComponent,
     HomeComponent,
     BlogDetailsComponent,
-    LoginComponent
+    LoginComponent,
+    ChatComponent,
+    AllUsersComponent
   ],
   imports: [
     BrowserModule,

@@ -10,6 +10,8 @@ import { HomeComponent } from './features/public/home/home.component';
 import { BlogDetailsComponent } from './features/public/blog-details/blog-details.component';
 import { LoginComponent } from './features/auth/login/login.component';
 import { authGuard } from './features/auth/guards/auth.guard';
+import { ChatComponent } from './features/Chat/chat/chat.component';
+import { AllUsersComponent } from './features/users/all-users/all-users.component';
 
 const routes: Routes = [
   {
@@ -37,7 +39,18 @@ const routes: Routes = [
     path: 'admin/blogposts',
     component: BlogpostListComponent,
     canActivate: [authGuard]
-  },{
+  },
+  {
+    path: 'admin/users',
+    component: AllUsersComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'chat/:id',
+    component: ChatComponent,
+    canActivate: [authGuard]
+  }
+  ,{
     path:'admin/blogposts/add',
     component: AddBlogpostComponent,
     canActivate: [authGuard]

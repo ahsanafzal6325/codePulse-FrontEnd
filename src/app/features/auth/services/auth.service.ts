@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment.development';
 import { LoginRequest } from '../models/login-request.model';
 import { User } from '../models/user.model';
 import { LoginResponse } from '../models/login-response.model';
-
+import { jwtDecode } from 'jwt-decode';
 @Injectable({
   providedIn: 'root'
 })
@@ -42,6 +42,7 @@ export class AuthService {
     const roles = localStorage.getItem('user-roles');
     if(email && roles){
       const user: User = {
+        id: localStorage.getItem('user-id') || '',
         email: email , 
         roles: roles.split(',')
       }
@@ -53,6 +54,7 @@ export class AuthService {
   setUser(user: User): void{
 
     this.$user.next(user);
+    localStorage.setItem('user-id',user.id);
     localStorage.setItem('user-email',user.email);
     localStorage.setItem('user-roles',user.roles.join(','));
   }
